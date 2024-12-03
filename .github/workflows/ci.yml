@@ -1,0 +1,48 @@
+name: Flask CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          . venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Start Flask App
+        run: |
+          . venv/bin/activate
+          flask run --host=127.0.0.1 --port=5000 &
+          echo $! > flask_pid.txt
+          
+      - name: Run tests
+        run: |
+          curl http://127.0.0.1:5000/  # Test if the app is reachable
+          . venv/bin/activate
+          pytest tests/
+      
+      - name: Stop Flask App
+        run: |
+          kill $(cat flask_pid.txt)      

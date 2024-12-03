@@ -40,3 +40,8 @@ jobs:
         run: |
           . venv/bin/activate
           flask run --host=127.0.0.1 --port=5000
+
+      # prevent infinite runn
+      - name: Stop Flask App
+        run: |
+          kill $(cat flask_pid.txt)        

@@ -34,7 +34,7 @@ jobs:
       - name: Run tests
         run: |
           . venv/bin/activate
-          pytest
+          pytest tests/
       # Build the Flask app (optional if just running tests)
       - name: Build Flask app
         run: |

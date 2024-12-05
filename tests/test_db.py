@@ -3,7 +3,7 @@ import pytest
 
 conn = sqlite3.connect('./data/db.db')
 
-def test_username_search(username = "flaskusser"):
+def test_username_search(username = "flaskuser"):
     cursor = conn.cursor() 
     cursor.execute("SELECT 1 FROM USERS WHERE (Username == '" + username + "')")
     rows = cursor.fetchall()

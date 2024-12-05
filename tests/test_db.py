@@ -37,10 +37,12 @@ def mock_db():
     
     
     # add mock data
+    insertions = [
+        "INSERT INTO USERS VALUES ('mock_user','lName',NULL,'mockUser');"
+    ]
     
-    insertion = "INSERT INTO USERS VALUES ('mock_user','lName',NULL,'mockUser');"
-
-    cursor.execute(insertion)
+    for insertion in insertions:
+        cursor.execute(insertion)
     
     conn.commit()
     

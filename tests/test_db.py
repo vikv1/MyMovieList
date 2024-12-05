@@ -38,6 +38,10 @@ def mock_db():
     
     # add mock data
     
+    insertion = "INSERT INTO USERS VALUES ('mock_user','lName',NULL,'mockUser');"
+
+    cursor.execute(insertion)
+    
     conn.commit()
     
     yield conn
@@ -46,7 +50,7 @@ def mock_db():
     
 
 def test_username_search(mock_db):
-    username = "test_user"
+    username = "mockUser"
     cursor = mock_db.cursor()
     cursor.execute("SELECT 1 FROM USERS WHERE (Username == '" + username + "')")
     rows = cursor.fetchall()

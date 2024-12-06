@@ -1,14 +1,11 @@
-import logging
-import sqlite3
 import DBInterface
-import azure.functions as func
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html'), 200
 
 @app.route('/signup', methods =["GET", "POST"]) 
 def signup():
@@ -19,8 +16,28 @@ def signup():
 
         DBInterface.writeUser(first_name, last_name, username)
         
-    return render_template('create_user_form.html')
+    return render_template('create_user_form.html'), 200
 
+@app.route('/makeRecommendation', methods = ["GET", "POST"])
+def makeRecommendation():
+    if request.method == "POST":
+        sender = request.form.get("username")
+        dest = request.form.get("friend_username") 
+        movieTitle = request.form.get("movie-title") 
+
+        DBInterface.makeRecommendation(sender, dest, movieTitle)
+        
+    return render_template('recommend_form.html')
+
+@app.route('/viewRecommendations', methods=["GET"])
+def viewRecommendations():
+    user_name = request.args.get('user_name')
+    if not user_name:
+        return "Please provide a user name.", 400
+    
+    movies = DBInterface.getRecommendations(user_name)
+    
+    return render_template('recommendations.html', user_name=user_name, movies=movies)
 @app.route('/addfriend', methods=["GET", "POST"])
 def addFriend():
     if request.method == "POST":

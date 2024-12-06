@@ -26,3 +26,7 @@ def test_view_rec_page_without_user(client):
 def test_view_rec_page_with_user(client):
     response = client.get('/viewRecommendations?user_name=mockUser1')
     assert response.status_code == 200
+
+def test_add_friend_page(client):
+    response = client.get('/addfriend')
+    assert response.status_code == 200

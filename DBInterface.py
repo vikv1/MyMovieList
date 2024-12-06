@@ -50,7 +50,7 @@ def getRecommendations(username) -> list:
 
 def getUserID(user):
     cursor = conn.cursor() 
-    selection = "SELECT * FROM Users WHERE FIRST NAME = " + user + " LIMIT 1;"
+    selection = "SELECT * FROM Users WHERE Username = " + user + " LIMIT 1;"
     cursor.execute(selection)
     userRow = cursor.fetchone()
     cursor.close()
@@ -60,7 +60,6 @@ def getUserID(user):
         return userRow[2]
     
 def writeFriend(user, friend):
-    
     if not validateUser(user):
         return 0
     elif not validateUser(friend):

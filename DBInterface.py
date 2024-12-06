@@ -32,13 +32,14 @@ def getUserID(user):
         return userRow[2]
     
 def writeFriend(user, friend):
-    userID = getUserID(user)
-    friendID = getUserID(friend)
-    if(userID == -1):
+    
+    if not validateUser(user):
         return 0
-    elif(friendID == -1):
+    elif not validateUser(friend):
         return -1
     else:
+        userID = getUserID(user)
+        friendID = getUserID(friend)
         cursor = conn.cursor() 
         insertion = "INSERT INTO FRIENDSHIPS VALUES ('" + userID + "','" + friendID + "');"
         cursor.execute(insertion)

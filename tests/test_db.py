@@ -84,3 +84,16 @@ def test_make_recommendation_to_user(mock_db):
 
     assert movies # verify receiver got the rec
     
+def test_add_friend_existing_user(mock_db):
+    user = "mockUser1"
+    friend = "mockUser2"
+
+    cursor = mock_db.cursor()
+
+    insertion = "INSERT INTO FRIENDSHIPS VALUES ('" + user + "','" + friend + "');"
+    cursor.execute(insertion)
+
+    cursor.execute("SELECT * FROM FRIENDSHIPS WHERE UserID1 == ?", (user,))
+    friendship = cursor.fetchone()
+
+    assert friendship

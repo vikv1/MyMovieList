@@ -41,7 +41,7 @@ jobs:
         run: |
           curl http://127.0.0.1:5000/  # Test if the app is reachable
           . venv/bin/activate
-          pytest
+          pytest tests/
       
       - name: Stop Flask App
         run: |

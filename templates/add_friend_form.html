@@ -1,0 +1,6 @@
+<form action="{{ url_for("addFriend")}}" method="post">
+    <label for="username">Your Username:</label>
+    <input type="text" id="username" name="user" placeholder="username" />
+    <label for="fusername">Friend Username:</label>
+    <input type="text" id="fusername" name="friend" placeholder="username" />
+    <button type="submit">Add Friend</button>

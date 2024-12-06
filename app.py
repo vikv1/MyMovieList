@@ -18,4 +18,12 @@ def signup():
         DBInterface.writeUser(first_name, last_name)
         
     return render_template('create_user_form.html')
+
+@app.route('/addfriend', methods=["GET", "POST"])
+def addFriend():
+    if request.method == "POST":
+        user_first = request.form.get("user")
+        friend_first = request.form.get("friend")
+        DBInterface.writeFriend(user_first, friend_first)
+    return render_template('add_friend_form.html')
     

@@ -19,11 +19,11 @@ def mock_db():
     
     cursor.execute("""
         CREATE TABLE "Recommendations" (
-	    "RecommenderID"	INT NOT NULL,
-	    "RecomendeeID"	INT NOT NULL,
+	    "RecommenderUsername"	TEXT NOT NULL,
+	    "RecomendeeUsername"	TEXT NOT NULL,
 	    "MovieTitle"	TEXT NOT NULL,
-	    FOREIGN KEY("RecomendeeID") REFERENCES "Users"("UserID"),
-	    FOREIGN KEY("RecommenderID") REFERENCES "Users"("UserID"));
+	    FOREIGN KEY("RecommenderUsername") REFERENCES "Users"("Username"),
+	    FOREIGN KEY("RecomendeeUsername") REFERENCES "Users"("Username"));
     """)
     
     cursor.execute("""
@@ -38,7 +38,9 @@ def mock_db():
     
     # add mock data
     insertions = [
-        "INSERT INTO USERS VALUES ('mock_user','lName',NULL,'mockUser');"
+        "INSERT INTO USERS VALUES ('mock_user','lName',NULL,'mockUser1');",
+        "INSERT INTO USERS VALUES ('mock_user','lName',NULL,'mockUser2');",
+        "INSERT INTO USERS VALUES ('mock_user','lName',NULL,'mockUser3');",
     ]
     
     for insertion in insertions:
@@ -52,7 +54,7 @@ def mock_db():
     
 
 def test_username_search(mock_db):
-    username = "mockUser"
+    username = "mockUser1"
     cursor = mock_db.cursor()
     cursor.execute("SELECT 1 FROM USERS WHERE (Username == '" + username + "')")
     rows = cursor.fetchall()
@@ -66,3 +68,19 @@ def test_user_not_in_db(mock_db):
     rows = cursor.fetchall()
     
     assert not rows
+
+def test_make_recommendation_to_user(mock_db):
+    sender = "mockUser1"
+    recvr = "mockUser2"
+    movie = "movie title"
+    
+    cursor = mock_db.cursor()
+    insertion = "INSERT INTO RECOMMENDATIONS VALUES ('" + sender + "','" + recvr + "','" + movie + "')"
+    cursor.execute(insertion)
+    
+    cursor.execute("SELECT MovieTitle FROM recommendations WHERE RecomendeeUsername = ?", (recvr,))
+    movies = cursor.fetchall()
+    movies = [row[0] for row in movies]
+
+    assert movies # verify receiver got the rec
+    

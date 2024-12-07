@@ -50,27 +50,47 @@ def getRecommendations(username) -> list:
 
 def getUserID(user):
     cursor = conn.cursor() 
-    selection = "SELECT * FROM Users WHERE Username = " + user + " LIMIT 1;"
-    cursor.execute(selection)
+    selection = "SELECT UserID FROM Users WHERE Username = ? LIMIT 1;"
+    cursor.execute(selection, (user,))
     userRow = cursor.fetchone()
     cursor.close()
     if userRow is None:
         return -1
     else:
-        return userRow[2]
+        return userRow[0]
     
 def writeFriend(user, friend):
     if not validateUser(user):
         return 0
     elif not validateUser(friend):
         return -1
-    else:
-        userID = getUserID(user)
-        friendID = getUserID(friend)
-        cursor = conn.cursor() 
-        insertion = "INSERT INTO FRIENDSHIPS VALUES ('" + userID + "','" + friendID + "');"
-        cursor.execute(insertion)
-        conn.commit()
-        cursor.close()
-        return 1
+    userID = getUserID(user)
+    friendID = getUserID(friend)
 
+    if userID > friendID:
+        userID, friendID = friendID, userID
+    
+    cursor = conn.cursor() 
+    insertion = "INSERT INTO FRIENDSHIPS VALUES ( ? , ? );"
+    cursor.execute(insertion, (userID, friendID))
+    conn.commit()
+    cursor.close()
+    return 1
+
+def removeFriend(user, friend):
+    if not validateUser(user):
+        return 0
+    elif not validateUser(friend):
+        return -1
+    userID = getUserID(user)
+    friendID = getUserID(friend)
+
+    if userID > friendID:
+        userID, friendID = friendID, userID
+
+    cursor = conn.cursor()
+    deletion =  "DELETE FROM FRIENDSHIPS WHERE UserID1 = ? AND UserID2 = ? "
+    cursor.execute(deletion, (userID, friendID))
+    conn.commit()
+    cursor.close()
+    return 1

@@ -30,3 +30,7 @@ def test_view_rec_page_with_user(client):
 def test_add_friend_page(client):
     response = client.get('/addfriend')
     assert response.status_code == 200
+
+def test_remove_friend_page(client):
+    response = client.get('/removefriend')
+    assert response.status_code == 200

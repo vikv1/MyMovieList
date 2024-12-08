@@ -38,3 +38,28 @@ def viewRecommendations():
     movies = DBInterface.getRecommendations(user_name)
     
     return render_template('recommendations.html', user_name=user_name, movies=movies)
+
+@app.route('/addfriend', methods=["GET", "POST"])
+def addFriend():
+    if request.method == "POST":
+        user_first = request.form.get("user")
+        friend_first = request.form.get("friend")
+        friendship = DBInterface.writeFriend(user_first, friend_first)
+        if friendship == 0:
+            return "Please provide a valid username", 400
+        elif friendship == -1:
+            return "Please provide valid friend username", 400
+    return render_template('add_friend_form.html')
+
+@app.route('/removefriend', methods=["GET", "POST"])
+def removeFriend():
+    if request.method == "POST":
+        user_first = request.form.get("user")
+        friend_first = request.form.get("friend")
+        friendship = DBInterface.removeFriend(user_first, friend_first)
+        if friendship == 0:
+            return "Please provide a valid username", 400
+        elif friendship == -1:
+            return "Please provide valid friend username", 400
+    return render_template('remove_friend_form.html')
+    

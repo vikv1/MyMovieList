@@ -41,6 +41,7 @@ def mock_db():
         "INSERT INTO USERS VALUES ('mock_user','lName',NULL,'mockUser1');",
         "INSERT INTO USERS VALUES ('mock_user','lName',NULL,'mockUser2');",
         "INSERT INTO USERS VALUES ('mock_user','lName',NULL,'mockUser3');",
+        "INSERT INTO FRIENDSHIPS VALUES (1 , 2);",
     ]
     
     for insertion in insertions:
@@ -84,3 +85,27 @@ def test_make_recommendation_to_user(mock_db):
 
     assert movies # verify receiver got the rec
     
+def test_add_friend_existing_user(mock_db):
+    user = "mockUser1"
+    friend = "mockUser2"
+
+    cursor = mock_db.cursor()
+
+    insertion = "INSERT INTO FRIENDSHIPS VALUES (?,?);"
+    cursor.execute(insertion, (user, friend))
+
+    cursor.execute("SELECT * FROM FRIENDSHIPS WHERE UserID1 == ?", (user,))
+    friendship = cursor.fetchone()
+
+    assert friendship
+
+def test_remove_existing_friendship(mock_db):
+    cursor = mock_db.cursor()
+
+    deletion = "DELETE FROM FRIENDSHIPS WHERE UserID1 = 1 AND UserID2 = 2 "
+    cursor.execute(deletion)
+
+    cursor.execute("SELECT * FROM FRIENDSHIPS WHERE UserID1 == 1")
+    friendship = cursor.fetchone()
+
+    assert not friendship

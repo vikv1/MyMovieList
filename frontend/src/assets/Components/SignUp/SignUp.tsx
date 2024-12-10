@@ -25,7 +25,7 @@ const SignUp = () => {
       if (response.status === 200) {
         setMessage("Signed up!");
         // Redirect to /recommendations after successful signup
-        navigate("/recommendations");
+        navigate("/navbar");
       }
     } catch (error: AxiosError | any) {
       if (error.response) {

@@ -1,7 +1,9 @@
 import DBInterface
 from flask import Flask, request, render_template
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def home():
@@ -10,9 +12,9 @@ def home():
 @app.route('/signup', methods =["GET", "POST"]) 
 def signup():
     if request.method == "POST":
-        first_name = request.form.get("fname")
-        last_name = request.form.get("lname") 
-        username = request.form.get("username") 
+        first_name = request.json.get("fname")
+        last_name = request.json.get("lname") 
+        username = request.json.get("username") 
 
         DBInterface.writeUser(first_name, last_name, username)
         
@@ -42,8 +44,8 @@ def viewRecommendations():
 @app.route('/addfriend', methods=["GET", "POST"])
 def addFriend():
     if request.method == "POST":
-        user_first = request.form.get("user")
-        friend_first = request.form.get("friend")
+        user_first = request.json.get("user")
+        friend_first = request.json.get("friend")
         friendship = DBInterface.writeFriend(user_first, friend_first)
         if friendship == 0:
             return "Please provide a valid username", 400
@@ -54,8 +56,8 @@ def addFriend():
 @app.route('/removefriend', methods=["GET", "POST"])
 def removeFriend():
     if request.method == "POST":
-        user_first = request.form.get("user")
-        friend_first = request.form.get("friend")
+        user_first = request.json.get("user")
+        friend_first = request.json.get("friend")
         friendship = DBInterface.removeFriend(user_first, friend_first)
         if friendship == 0:
             return "Please provide a valid username", 400

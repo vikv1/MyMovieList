@@ -17,3 +17,29 @@
   display: flex;
   animation: scroll-posters 30s linear infinite;
 }
+
+.hide-scrollbar {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Background color of the track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ffa500; /* Orange color for the scrollbar thumb */
+  border-radius: 10px; /* Rounded edges */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ff8c00; /* Darker orange on hover */
+}

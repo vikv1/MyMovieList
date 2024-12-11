@@ -76,7 +76,7 @@ const Navbar = () => {
       </nav>
 
       {/* Input Field */}
-      <div className="absolute top-[250px] left-1/2 transform -translate-x-1/2 z-10">
+      <div className="absolute top-[250px] left-1/2 transform -translate-x-1/2 z-30">
         <div className="relative flex items-center w-[1150px] h-[55px] bg-search-bar-color text-white rounded-full shadow-xl">
           <div className="flex items-center justify-center w-[55px] h-[55px] bg-search-container-color rounded-full shadow-xl">
             <img
@@ -107,7 +107,8 @@ const Navbar = () => {
       </div>
 
       {/* Dynamic Content */}
-      <div className="flex flex-1 justify-center items-center z-5">
+      <div className="relative mt-[170px] z-10 flex flex-1 justify-center items-center overflow-hidden">
+        {/* Adjusted `mt-[330px]` for 250px search bar + 40px gap */}
         {activePage === "recommendations" ? (
           <Recommendations username={username} />
         ) : (

@@ -11,6 +11,7 @@ module.exports = {
         'navbar-button-select-color' : '#1A1A1A',
         'search-container-color' : '#3B3B3B',
         'search-bar-color' : '#252525',
+        'movie-number-color' : '#1F1F1F',
       }
     },
   },

@@ -23,9 +23,9 @@ def signup():
 @app.route('/makeRecommendation', methods = ["GET", "POST"])
 def makeRecommendation():
     if request.method == "POST":
-        sender = request.json.get("username")
-        dest = request.json.get("friend_username") 
-        movieTitle = request.json.get("movie-title") 
+        sender = request.form.get("username")
+        dest = request.form.get("friend_username") 
+        movieTitle = request.form.get("movie-title") 
 
         DBInterface.makeRecommendation(sender, dest, movieTitle)
         

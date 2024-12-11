@@ -89,7 +89,7 @@ const Navbar = () => {
             type="text"
             placeholder={
               activePage === "recommendations"
-                ? "Enter the friend's username you want to recommend to"
+                ? "Enter the username you want to find recommendations for"
                 : "Enter the friend's username you want to add"
             }
             className="flex-1 bg-transparent placeholder-gray-400 text-xl text-white px-5 focus:outline-none"

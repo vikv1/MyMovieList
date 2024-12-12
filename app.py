@@ -39,7 +39,7 @@ def viewRecommendations():
     
     movies = DBInterface.getRecommendations(user_name)
     
-    return render_template('recommendations.html', user_name=user_name, movies=movies)
+    return movies, 200#render_template('recommendations.html', user_name=user_name, movies=movies)
 
 @app.route('/addfriend', methods=["GET", "POST"])
 def addFriend():

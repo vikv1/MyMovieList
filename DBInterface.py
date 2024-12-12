@@ -42,9 +42,10 @@ def getRecommendations(username) -> list:
         return []
     
     cursor = conn.cursor()
-    cursor.execute("SELECT MovieTitle FROM recommendations WHERE RecomendeeUsername = ?", (username,))
-    movies = cursor.fetchall()
-    movies = [row[0] for row in movies]
+    cursor.execute("SELECT MovieTitle, REcommenderUsername FROM recommendations WHERE RecomendeeUsername = ?", (username,))
+    #movies = cursor.fetchall()
+    # movies = [row[0] for row in movies]
+    movies = [{"recommender": row[1], "movieTitle": row[0]} for row in cursor.fetchall()]
     
     return movies
 

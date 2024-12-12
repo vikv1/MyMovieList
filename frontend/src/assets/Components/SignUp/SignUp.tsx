@@ -74,7 +74,7 @@ const SignUp = () => {
           className={"inputButton"}
           type="button"
           onClick={handleSubmit}
-          value={"Sign Up"}
+          value={"Create Account"}
         />
       </div>
     </div>

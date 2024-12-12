@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Fuse from "fuse.js";
+// import * as dotenv from "dotenv";
 
+// dotenv.config();
 interface RecommendationsProps {
   username: string;
 }
@@ -12,7 +14,11 @@ const Recommendations = ({ username }: RecommendationsProps) => {
   >([]); // Store movie title and poster URL
   const [isLoading, setIsLoading] = useState(false);
 
-  const POSTERDB_API_KEY = "1d65afe2ccb172d32c664861afa6c322"; // Replace with your actual PosterDB API key
+  const POSTERDB_API_KEY = import.meta.env.VITE_POSTERDB_API_KEY;
+
+  if (!POSTERDB_API_KEY) {
+    console.error("API Key is missing. Check your .env setup.");
+  }
 
   useEffect(() => {
     if (username.trim().length > 0) {

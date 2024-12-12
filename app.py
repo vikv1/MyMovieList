@@ -64,4 +64,3 @@ def removeFriend():
         elif friendship == -1:
             return "Please provide valid friend username", 400
     return render_template('remove_friend_form.html')
-    

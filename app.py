@@ -64,3 +64,29 @@ def removeFriend():
         elif friendship == -1:
             return "Please provide valid friend username", 400
     return render_template('remove_friend_form.html')
+
+@app.route('/getfriends', methods=["GET", "POST"])
+def getFriends():
+    if request.method == "GET":
+        user = request.args.get("user")
+    elif request.method == "POST":
+        user = request.json.get("user")
+    if not user:
+        return "Username is required", 400
+    friends = DBInterface.getFriends(user)
+    return friends
+
+@app.route('/getprofilebyid', methods=["GET", "POST"])
+def getProfile():
+    if request.method == "GET":
+        userID = request.args.get("userid") 
+    elif request.method == "POST":
+        userID = request.json.get("userid") 
+
+    if not userID:
+        return "User ID is required", 400
+    
+    profile = DBInterface.getUserInfoById(userID)
+    if not profile:
+        return "Not valid user ID", 400
+    return profile, 200

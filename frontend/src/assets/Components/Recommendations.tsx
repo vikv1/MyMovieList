@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Fuse from "fuse.js";
-// import * as dotenv from "dotenv";
 
-// dotenv.config();
 interface RecommendationsProps {
   username: string;
 }

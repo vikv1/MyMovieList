@@ -42,9 +42,10 @@ def getRecommendations(username) -> list:
         return []
     
     cursor = conn.cursor()
-    cursor.execute("SELECT MovieTitle FROM recommendations WHERE RecomendeeUsername = ?", (username,))
-    movies = cursor.fetchall()
-    movies = [row[0] for row in movies]
+    cursor.execute("SELECT MovieTitle, REcommenderUsername FROM recommendations WHERE RecomendeeUsername = ?", (username,))
+    #movies = cursor.fetchall()
+    # movies = [row[0] for row in movies]
+    movies = [{"recommender": row[1], "movieTitle": row[0]} for row in cursor.fetchall()]
     
     return movies
 
@@ -94,3 +95,45 @@ def removeFriend(user, friend):
     conn.commit()
     cursor.close()
     return 1
+
+def getFriends(user):
+    if validateUser(user):
+        userID = getUserID(user)
+        cursor = conn.cursor()
+        query = """
+            SELECT CASE
+                    WHEN UserID1 = ? THEN UserID2
+                    ELSE UserID1
+                END AS FriendID
+            FROM Friendships
+            WHERE UserID1 = ? OR UserID2 = ?;
+        """
+
+        cursor.execute(query, (userID, userID, userID))
+        friends = [row[0] for row in cursor.fetchall()]
+        cursor.close()
+        result = {
+            "user": user,
+            "friendsIDs": friends
+        }
+        return result
+    
+    logging.info("User does not exist")
+    return {}
+
+def getUserInfoById(userID):
+    cursor = conn.cursor()
+    query = "SELECT * FROM Users WHERE UserID = ?"
+    cursor.execute(query, (userID,))
+    row = cursor.fetchone()
+    cursor.close()
+    if row is None:
+        logging.info("User ID does not exist")
+        return {}
+    result = {
+        "firstName": row[0],
+        "lastName": row[1],
+        "userID": row[2],
+        "username": row[3]
+    }
+    return result

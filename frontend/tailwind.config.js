@@ -12,6 +12,13 @@ module.exports = {
         'search-container-color' : '#3B3B3B',
         'search-bar-color' : '#252525',
         'movie-number-color' : '#1F1F1F',
+        'Login-Icon-Color' : '#DC8C48',
+        'Login-Gradient-Start' : '#DE7D06',
+        'Login-Gradient-Via' : '#D58B1B',
+        'Login-Gradient-End' : '#CE8920',
+        'Form-Container-Color' : '#191919',
+        'Field-Container-Color' : '#131313',
+
       }
     },
   },

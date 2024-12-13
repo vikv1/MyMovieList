@@ -97,9 +97,7 @@ const Navbar = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                if (activePage === "recommendations") {
-                  setUsername(searchQuery);
-                }
+                setUsername(searchQuery);
               }
             }}
           />
@@ -112,7 +110,7 @@ const Navbar = () => {
         {activePage === "recommendations" ? (
           <Recommendations username={username} />
         ) : (
-          <Friends />
+          <Friends username={username} />
         )}
       </div>
     </div>

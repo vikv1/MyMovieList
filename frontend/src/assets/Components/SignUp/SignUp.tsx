@@ -9,7 +9,11 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [message, setMessage] = useState("");
 
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
+
+  const handleHomePageClick = () => {
+    navigate("/"); // Navigate to the home page ("/")
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +27,6 @@ const SignUp = () => {
 
       if (response.status === 200) {
         setMessage("Signed up!");
-        // Redirect to /navbar after successful signup
         navigate("/navbar");
       }
     } catch (error: AxiosError | any) {
@@ -36,26 +39,28 @@ const SignUp = () => {
   };
 
   const handleSignInClick = () => {
-    navigate("/login"); // Redirect to the login page
+    navigate("/login");
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="relative flex flex-col min-h-screen bg-black text-white">
       {/* Background */}
       <div
-        className="absolute inset-0 bg-cover bg-center rotate-180 z-0"
+        className="absolute inset-0 bg-cover bg-center z-0"
         style={{
           backgroundImage:
             "url('src/assets/UI_Files/Backgrounds/background-3.jpg')",
         }}
-      >
-        {/* Black overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-50 z-10" />
-      </div>
+      />
+      {/* Black overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50 z-20"></div>
 
-      {/* App Icon */}
-      <div className="absolute top-[45px] left-[40px] z-20">
-        <button className="relative focus:outline-none">
+      {/* Header */}
+      <div className="absolute top-[95px] left-[90px] z-30">
+        <button
+          onClick={handleHomePageClick}
+          className="relative focus:outline-none"
+        >
           <img
             src="/src/assets/UI_Files/App Icon.png"
             alt="App Icon"
@@ -64,78 +69,85 @@ const SignUp = () => {
         </button>
       </div>
 
-      {/* Login Button */}
-      <div className="absolute top-[45px] right-[40px] z-20">
-        <div className="mb-4">
-          <button
-            onClick={handleSignInClick}
-            className="w-full flex justify-center items-center p-4 rounded-lg cursor-pointer hover:opacity-80 focus:outline-none"
-          >
+      <div className="absolute top-[87.5px] right-[90px] z-30">
+        <button
+          onClick={handleSignInClick}
+          className="flex items-center w-[190px] h-[64px] bg-gradient-to-r from-Login-Gradient-Start via-Login-Gradient-Via to-Login-Gradient-End rounded-full hover:opacity-90"
+        >
+          <div className="flex items-center justify-center w-[64px] h-[64px] bg-Login-Icon-Color shadow-md rounded-full">
             <img
-              src="/src/assets/UI_Files/Log In.png"
-              alt="Sign In"
-              className="h-8 w-auto"
+              src="/src/assets/UI_Files/Login.png"
+              alt="Icon"
+              className="w-[23px] h-[23px]"
             />
-          </button>
-        </div>
+          </div>
+          <span className="font-bold text-white pl-[30px] pr-[30px] py-[20px] ">
+            Log In
+          </span>
+        </button>
       </div>
 
-      {/* Title Container */}
-      <div className="relative z-20 flex items-center justify-center flex-col min-h-screen">
-        {/* Introductory Text */}
-        <div className="text-center text-white mb-4">
-          <p className="text-3xl">Ready to explore the world of movies?</p>
+      {/* Form Section */}
+      <div className="relative z-20 flex flex-col items-center justify-center min-h-screen px-4">
+        <div className="text-center mb-[20px]">
+          <h1 className="text-3xl font-bold mb-2">
+            Ready to explore the world of movies?
+          </h1>
           <p className="text-lg">Enter your details to create an account.</p>
         </div>
-
-        {/* Sign Up Form */}
-        <div className="bg-search-bar-color bg-opacity-80 p-8 rounded-lg shadow-lg max-w-md w-full">
-          <div className="text-2xl font-semibold mb-4 text-white">SIGN UP</div>
-
-          {/* First Name Input */}
-          <div className="mb-4">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-Form-Container-Color bg-opacity-90 p-8 rounded-2xl shadow-xl w-[550px] h-[480px]"
+        >
+          <div className="mb-[25px]">
+            <label className="block mb-2 text-sm font-bold">FIRST NAME</label>
             <input
+              type="text"
               value={fname}
-              placeholder="Enter your first name here"
-              onChange={(ev) => setFirstName(ev.target.value)}
-              className="w-full p-2 bg-custom-black rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="Please enter your first name"
+              className="w-full p-4 bg-Field-Container-Color rounded-md border border-Field-Container-Color focus:outline-none focus:ring-2 focus:ring-orange-400"
+              required
             />
           </div>
-
-          {/* Last Name Input */}
-          <div className="mb-4">
+          <div className="mb-[25px]">
+            <label className="block mb-2 text-sm font-bold">LAST NAME</label>
             <input
+              type="text"
               value={lname}
-              placeholder="Enter your last name here"
-              onChange={(ev) => setLastName(ev.target.value)}
-              className="w-full p-2 bg-custom-black rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+              onChange={(e) => setLastName(e.target.value)}
+              placeholder="Please enter your last name"
+              className="w-full p-4 bg-Field-Container-Color rounded-md border border-Field-Container-Color focus:outline-none focus:ring-2 focus:ring-orange-400"
+              required
             />
           </div>
-
-          {/* Username Input */}
-          <div className="mb-4">
+          <div className="mb-[40px]">
+            <label className="block mb-2 text-sm font-bold">USERNAME</label>
             <input
+              type="text"
               value={username}
-              placeholder="Enter your username here"
-              onChange={(ev) => setUsername(ev.target.value)}
-              className="w-full p-2 bg-custom-black rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Please enter your username"
+              className="w-full p-4 bg-Field-Container-Color rounded-md border border-Field-Container-Color focus:outline-none focus:ring-2 focus:ring-orange-400"
+              required
             />
           </div>
-
-          {/* Create Account Button */}
-          <div className="mb-4">
-            <button
-              onClick={handleSubmit}
-              className="w-full flex justify-center items-center p-4 rounded-lg cursor-pointer hover:opacity-80 focus:outline-none"
-            >
+          <button
+            type="submit"
+            className=" flex items-center ml-[107.5px] w-[265px] h-[64px] bg-gradient-to-r from-Login-Gradient-Start via-Login-Gradient-Via to-Login-Gradient-End rounded-full hover:opacity-90"
+          >
+            <div className="flex items-center justify-center w-[64px] h-[64px] bg-Login-Icon-Color shadow-md rounded-full">
               <img
-                src="/src/assets/UI_Files/Sign Up Button.png"
-                alt="Create Account"
-                className="h-10 w-auto"
+                src="/src/assets/UI_Files/Login.png"
+                alt="Icon"
+                className="w-[23px] h-[23px]"
               />
-            </button>
-          </div>
-        </div>
+            </div>
+            <span className="font-bold text-white pl-[20%] py-[20px] ">
+              Sign Up
+            </span>
+          </button>
+        </form>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ const App = () => {
         <Route path="/navbar" element={<Navbar />} />
 
         {/* You can add a default route as well */}
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<SignUp />} />
       </Routes>
     </Router>
   );
